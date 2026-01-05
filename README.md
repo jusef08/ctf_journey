@@ -23,9 +23,7 @@ I'll try to follow a structured approach:
   4. Attempt exploitation
      
   5. Privilege escalation (if necessary)
-      
-  6. Post-exploitation & cleanup
-
+     
 
 If I get stuck, I may consult hints or partial walkthroughs, but only after significant effort. (pinkie promise)
 
