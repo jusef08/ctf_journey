@@ -77,9 +77,12 @@ We will use FTP to upload the file to the machine.
 
 Now lets make it executable.
 
+    gcc 45010.c -o exploit
+
 ![executable](other/executable.png)
 
 And there is the root flag. (proof.txt in /root)
 
 
 ![root](other/proof.png)
+
