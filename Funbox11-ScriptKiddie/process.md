@@ -29,7 +29,7 @@ After identifying the targets IP address I had to learn more about it, so I ran 
         
         -oN             --> Outputs the scan results to a file called "results.txt"
 
-![View nmap scan results](other/results.txt)
+You can view the scan results here:    ![View nmap scan results](other/results.txt)
 
 So we can see that FTP, SSH, SMTP, HTTP, POP3, NetBIOS-ssn & IMAP are running.
 
@@ -70,6 +70,7 @@ The exploit is available in Metasploit. (unix/ftp/proftpd_133c_backdoor)
 ![Aaaaand we're in!](other/were-in!.png)
 
 ![Here is the flag!](other/root-flag.png)
+
 
 
 
