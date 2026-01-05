@@ -1,10 +1,10 @@
 Jangow 1.0.1    (Source: https://vulnhub.com/entry/jangow-101,754/)
 
-First I need to learn the target VMs IP address so I ran a simple nmap discovery scan
+First I need to learn the target VMs IP address so I ran a simple nmap discovery scan.
 
     nmap -sn 192.168.100.0/24
 
-        -sn                 --> Skips port scans
+        -sn                 --> Host discovery scan
 
         192.168.100.0/24    --> Scans the entire subnet
 
@@ -32,7 +32,7 @@ Aaaand it indeed does not allow anonymous logins.
 
 Let's check out the website.
 
-Interestingly, when clicking on the "Buscar" section it just returns an empty page. Also, the url ends in "=" Maybe the server is vulnerable to command injection?
+Interestingly, when clicking on the "Buscar" section it just returns an empty page. Also, the url ends in "=" The buscar parameter is reflected in command input, possibly indicating a command injection vulnerability.
 
 ![buscar](other/buscar.png)
 
@@ -48,7 +48,7 @@ Also, we can see a wordpress folder.
 
 ![wordpress](other/wordpress-found.png)
 
-After doing some digging in the wordpress folder, i found another folder called "backups" and in there is a file called "config.php"
+After doing some digging in the WordPress folder, i found another folder called "backups" and in there is a file called "config.php"
 
 ![login details](other/config.png)
 
@@ -56,20 +56,19 @@ Let's try the login details.
 
 ![login1 failed](other/login-failed.png)
 
-Aaand that didn't work. Well let's think about this clearly: In every linux system, each user has a seperate folder in the /home directory. And looking back at the results of the command "ls -a /home", a folder called "desafio02" didn't exist. The only explanation for this is that the username was never registered on the system. But "jangow01" was. And when trying the credentials "jangow01:abygurl69"... well we can log in.
+Aaand that didn't work. Well let's think about this clearly: In every Linux system, each user has a separate folder in the /home directory. And looking back at the results of the command "ls -a /home", a folder called "desafio02" didn't exist. The only explanation for this is that the username was never registered on the system. But "jangow01" was. And when trying the credentials "jangow01:abygurl69"... well we can log in.
 
-![login success](other/login-success.png)´
+![login success](other/login-success.png)
 
-Aaand the machine is in portuguese and has a different keyboard layout than what I am used to. This may take a while.
+Aaand the machine is in Portuguese and has a different keyboard layout than what I am used to. This may take a while.
 
-So the next step would be to gain root privileges. In order to find the Linux kernel, we must run:
+So the next step would be to gain root privileges. Since no SUID binaries or sudo privileges were available, I investitgated kernel-level privilege escalation. In order to find the Linux kernel, we must run:
 
         uname -a
 
 ![uname -a](other/uname.png)
 
-From this output we can see that the machine is running 4.4.0-31. And after a quick google search I found a privilege escalation exploit.
-
+Based on the kernel version 4.4.0-31, I identified a known local privilege escalation vulnerability affecting this kernel.
 The exploit is available at: https://github.com/Jewel591/Privilege-Escalation/blob/master/45010.c
 
 We will use FTP to upload the file to the machine.
@@ -81,5 +80,6 @@ Now lets make it executable.
 ![executable](other/executable.png)
 
 And there is the root flag. (proof.txt in /root)
+
 
 ![root](other/proof.png)
