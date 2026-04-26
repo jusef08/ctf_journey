@@ -116,6 +116,6 @@ Looks like we found some credentials
 
 Great! Now that we're running as the root user, we can view the flag!
 
-![flag](other/flag.txt)
+![flag](other/flag.png)
 
 Thank you for reading!
